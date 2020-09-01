@@ -14,9 +14,8 @@ router.get("/workouts", (req, res) => {
     });
 });
 router.post("/workouts", ({ body }, res) => {
-  Workout.create(body)
-    .then((workouts) => {
-      res.json(workouts);
+  Workout.create({}).then(newWorkout => {
+    res.json(newWorkout);
     })
     .catch(err => {
       console.error(err);
@@ -25,55 +24,23 @@ router.post("/workouts", ({ body }, res) => {
   console.log(req.body);
 }); // add
 router.put("/workouts/:id", (req, res) => {
-  console.log(req.body);
-  res.end();
+  console.log(req.params.id);
+  Workout.findOneAndUpdate({ _id: params.id },
+    { $push: { excercises: body } },
+    { upsert: true, useFindandModify: false },
+    updatedWorkout => {
+      res.json(updatedWorkout);
+    })
 }); //edit
 router.get("/workouts/range", (req, res) => {
-
+  Workout.find({})
+    .then((workouts) => {
+      res.json(workouts);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(404).end();
+    });
 });
 
 module.exports = router;
-
-
-
-// app.post("/submit", ({ body }, res) => {
-//   db.Book.create(body)
-//     .then(({ _id }) => db.Library.findOneAndUpdate({}, { $push: { books: _id } }, { new: true }))
-//     .then(dbLibrary => {
-//       res.json(dbLibrary);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// });
-
-// app.get("/books", (req, res) => {
-//   db.Book.find({})
-//     .then(dbBook => {
-//       res.json(dbBook);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// });
-
-// app.get("/library", (req, res) => {
-//   db.Library.find({})
-//     .then(dbLibrary => {
-//       res.json(dbLibrary);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// });
-
-// app.get("/populated", (req, res) => {
-//   db.Library.find({})
-//     .populate("books")
-//     .then(dbLibrary => {
-//       res.json(dbLibrary);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// });
