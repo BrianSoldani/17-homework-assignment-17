@@ -20,15 +20,15 @@ const ExerciseSchema = new Schema({
   },
   weight: {
     type: Number,
-    required: true,
   },
   reps: {
     type: Number,
-    required: true,
   },
   sets: {
     type: Number,
-    required: true,
+  },
+  distance: {
+    type: Number,
   }
 });
 
@@ -36,23 +36,21 @@ const WorkoutSchema = new Schema({
   day: {
     type: Date,
     required: true,
+    default: Date.now()
   },
   exercises: [ExerciseSchema]
 },
   {
-    toJSON: { virtuals: true }
+    toJSON: { virtuals: true },
+    versionKey: false
   }
 );
 
 
-WorkoutSchema.virtual('totalDuration').get(function() {
-  return this.exercises.reduce((sum, current) => sum + current.duration, 0);
-});
-
-WorkoutSchema.virtual('totalDuration').get(function() {
+WorkoutSchema.virtual('totalDuration').get(function () {
   return this.exercises.reduce((sum, current) => sum + current.duration, 0);
 });
 
 const Workout = model("Workout", WorkoutSchema);
-
+Workout.syncIndexes();
 module.exports = Workout;
