@@ -38,5 +38,5 @@ The final application performs as expected and meets the requirements given abov
 - Tracker shows updated workout information<br>
 ![Updated Workout](assets/images/updateworkout.jpg) 
 
-- Workouut Dashboard<br>
+- Workout Dashboard<br>
 ![Workout Dashboard](assets/images/dashboard.jpg) 
